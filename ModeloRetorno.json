@@ -1,0 +1,16 @@
+{
+  saldoTotal: Number,
+  movimentacoes: [
+    {
+      data: Date,
+      id: String,
+      categoria: {
+        id: String,
+        name: String
+      },
+      tipo: String,
+      valor: Number,
+      descricao: String
+    }
+  ]
+}
