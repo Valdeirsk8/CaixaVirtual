@@ -2,7 +2,7 @@
 
 Api Caixa Virtual
 
-![Delphi Supported Versions](https://img.shields.io/badge/Delphi%20Supported%20Versions-Delphi.Tokyo-blue.svg)
+![Delphi Supported Versions](https://img.shields.io/badge/Delphi%20Supported%20Versions-Tokyo-blue.svg)
 
 **Recursos**
 
