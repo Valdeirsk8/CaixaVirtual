@@ -13,7 +13,7 @@ Metodos
     Get
 ```
 
-Autenticação requirida
+Autenticação requirida.
 basic-auth
 </br>Usuário e Senha para Teste
 </br>userName: caixa
@@ -55,4 +55,13 @@ Metodos
 ```
 
 - /categoria
+
+```
+
+```
+
 - /movimentacoes
+
+```
+
+```
