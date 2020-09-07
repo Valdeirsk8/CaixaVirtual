@@ -15,27 +15,28 @@ uses
 
   Caixa.Providers.Connection,
 
-  Ragna;
+  Ragna, DataSet.Serialize,
+
+  Horse;
 
 type
   TServiceCategoria = class(TProviderConnection)
     categoria: TFDQuery;
     categoriaID: TIntegerField;
     categoriaName: TStringField;
+    categoriaIdUser: TIntegerField;
   private
 
   public
-    function Post(aCategoria: TJSONObject): TFDQuery;
-    function Get: TFDQuery;
-    function GetByID(aID_Categoria:Integer): TFDQuery;
-    function Put(aCategoria: TJSONObject): TFDQuery;
-    function Delete(aID_Categoria:Integer): TFDQuery;
-
-
+    function Get(aID_Usuario:Integer): TFDQuery;
+    function GetByID(aID_Usuario, aID_Categoria: Integer): TFDQuery;
+    function Post(aID_Usuario:Integer; aCategoria: TJSONObject): TFDQuery;
+    function Put(aID_Usuario, aID_Categoria:Integer;  aCategoria: TJSONObject): TFDQuery;
+    function Delete(aID_Usuario, aID_Categoria:Integer): TJsonObject;
   end;
 
-var
-  ServiceCategoria: TServiceCategoria;
+//var
+//  ServiceCategoria: TServiceCategoria;
 
 implementation
 
@@ -45,37 +46,68 @@ implementation
 
 { TProviderConnection1 }
 
-function TServiceCategoria.Delete(aID_Categoria:Integer): TFDQuery;
+function TServiceCategoria.Delete(aID_Usuario, aID_Categoria:Integer): TJsonObject;
 begin
+  categoriaIdUser.Visible := False;
+
+  Categoria
+    .Where(categoriaID).Equals(aID_Categoria)
+    .&And(categoriaIdUser).Equals(aID_Usuario)
+  .OpenUp;
+
+  if Categoria.IsEmpty then
+    raise EHorseException.Create(THTTPStatus.NotFound, 'Categoria não encontrada.');
+
+  Result := Categoria.toJsonObject;
+
+  Categoria.Delete;
+end;
+
+function TServiceCategoria.Get(aID_Usuario:Integer): TFDQuery;
+begin
+  categoriaIdUser.Visible := false;
+
   Result := Categoria
-              .Remove(categoriaID, aID_Categoria)
+              .where(categoriaIdUser).Equals(aID_Usuario)
             .OpenUp;
 end;
 
-function TServiceCategoria.Get: TFDQuery;
+function TServiceCategoria.GetByID(aID_Usuario, aID_Categoria: Integer): TFDQuery;
 begin
-  Result := Categoria.OpenUp;
-end;
-
-function TServiceCategoria.GetByID(aID_Categoria: Integer): TFDQuery;
-begin
+  categoriaIdUser.Visible := false;
   Result := Categoria
-              .Where(CategoriaID)
-              .Equals(aID_Categoria)
+              .Where(CategoriaID).Equals(aID_Categoria)
+              .&And(categoriaIdUser).Equals(aID_Usuario)
             .OpenUp();
 end;
 
-function TServiceCategoria.Post(aCategoria: TJSONObject): TFDQuery;
+function TServiceCategoria.Post(aID_Usuario:Integer; aCategoria: TJSONObject): TFDQuery;
 begin
+  aCategoria.AddPair(categoriaIdUser.FieldName.ToLower, TJSONNumber.Create(aID_Usuario) );
   Categoria.New(aCategoria).OpenUp;
   Result := Categoria;
+
+  categoriaIdUser.Visible := False;
 end;
 
-function TServiceCategoria.Put(aCategoria: TJSONObject): TFDQuery;
+function TServiceCategoria.Put(aID_Usuario, aID_Categoria:Integer;  aCategoria: TJSONObject): TFDQuery;
 begin
+  categoriaIdUser.Visible := false;
+
   Result := Categoria
-              .UpdateById(CategoriaID, aCategoria.GetValue<Integer>('id'), aCategoria)
-            .OpenUp
+              .where(CategoriaID).Equals(aID_Categoria)
+              .&And(categoriaIdUser).equals(aID_Usuario)
+            .OpenUp;
+
+  if Categoria.IsEmpty then
+    raise EHorseException.Create(ThttpStatus.NotFound, 'Categoria não encontrada');
+
+  Categoria.MergeFromJSONObject(aCategoria, false);
+
+//  Categoria.Edit;
+//  categoriaName.AsString := aCategoria.GetValue<String>(categoriaName.FieldName.ToLower);
+//  Categoria.Post;
+
 end;
 
 end.

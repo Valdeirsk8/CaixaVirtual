@@ -14,6 +14,9 @@ object ProviderConnection: TProviderConnection
       'Port=3051'
       'CharacterSet=WIN1252'
       'DriverID=FB')
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    LoginPrompt = False
     BeforeConnect = FDConnectionBeforeConnect
     Left = 48
     Top = 24

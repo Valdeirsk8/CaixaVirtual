@@ -75,7 +75,7 @@
         <DCC_UsePackage>RESTComponents;FlexCel_Pdf;emsclientfiredac;DataSnapFireDAC;FlexCel_Report;FireDACIBDriver;emsclient;FireDACCommon;RESTBackendComponents;soapserver;CloudService;FireDACCommonDriver;inet;FireDAC;FlexCel_XlsAdapter;FireDACSqliteDriver;soaprtl;FlexCel_Core;soapmidas;FlexCel_Render;$(DCC_UsePackage)</DCC_UsePackage>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;$(DCC_Namespace)</DCC_Namespace>
         <SanitizedProjectName>APICaixaVirtual</SanitizedProjectName>
-        <DCC_UnitSearchPath>modules\.dcp;modules\.dcu;modules;modules\dataset-serialize\samples\basic\src;modules\dataset-serialize\samples\configuration\src;modules\dataset-serialize\samples\master-detail\src;modules\dataset-serialize\src\core;modules\dataset-serialize\src\helpers;modules\dataset-serialize\src\providers;modules\dataset-serialize\src\singletons;modules\dataset-serialize\src\types;modules\handle-exception\src;modules\horse\src;modules\horse-basic-auth\src;modules\horse-compression\src;modules\jhonson\src;modules\ragna\src\core;modules\ragna\src\helpers;modules\ragna\src\interfaces;modules\ragna\src\state;modules\ragna\src\types;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>modules\.dcp;modules\.dcu;modules;modules\dataset-serialize\samples\basic\src;modules\dataset-serialize\samples\configuration\src;modules\dataset-serialize\samples\master-detail\src;modules\dataset-serialize\src\core;modules\dataset-serialize\src\helpers;modules\dataset-serialize\src\providers;modules\dataset-serialize\src\singletons;modules\dataset-serialize\src\types;modules\delphi-jose-jwt\Samples\Basic;modules\delphi-jose-jwt\Samples\Console;modules\delphi-jose-jwt\Samples\CustomClaims;modules\delphi-jose-jwt\Source\Common;modules\delphi-jose-jwt\Source\JOSE;modules\delphi-jose-jwt\Tests\Source;modules\gbswagger\Source\Core;modules\gbswagger\Source\Datasnap;modules\gbswagger\Source\Horse;modules\gbswagger\Source\Validator;modules\handle-exception\src;modules\horse\src;modules\horse-basic-auth\src;modules\horse-compression\src;modules\horse-jwt\src;modules\jhonson\src;modules\ragna\src\core;modules\ragna\src\helpers;modules\ragna\src\interfaces;modules\ragna\src\state;modules\ragna\src\types;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_DcpOutput>.\dcu</DCC_DcpOutput>
         <VerInfo_Locale>2057</VerInfo_Locale>
         <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
@@ -146,15 +146,32 @@
         </DelphiCompile>
         <DCCReference Include="src\Providers\Caixa.Providers.Connection.pas">
             <Form>ProviderConnection</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="src\Services\Caixa.Services.Categoria.pas">
             <Form>ServiceCategoria</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="src\Controllers\Caixa.Controllers.Categoria.pas"/>
+        <DCCReference Include="src\Services\Caixa.Services.Usuario.pas">
+            <Form>ServiceUsuario</Form>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\Providers\Caixa.Providers.Encrypt.pas"/>
+        <DCCReference Include="src\Controllers\Caixa.Controllers.Usuario.pas"/>
+        <DCCReference Include="src\Providers\Caixa.Providers.Authorization.pas"/>
+        <DCCReference Include="src\Controllers\Caixa.Controllers.Login.pas"/>
+        <DCCReference Include="src\Services\Caixa.Services.Movimentacao.pas">
+            <Form>ServiceMovimentacao</Form>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\Controllers\Caixa.Controllers.Movimentacao.pas"/>
+        <DCCReference Include="src\Services\Caixa.Services.Movimentacao.Saldo.pas">
+            <Form>ServiceMovimentacaoSaldo</Form>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\Controllers\Caixa.Controllers.Movimentacao.Saldo.pas"/>
+        <DCCReference Include="modules\horse\src\Horse.HTTP.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -200,6 +217,12 @@
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\osx32\libcgsqlite3.dylib" Class="DependencyModule">
                     <Platform Name="OSX32">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="bin\APICaixaVirtual.exe" Configuration="Release" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>APICaixaVirtual.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

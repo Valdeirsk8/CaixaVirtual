@@ -5,7 +5,7 @@
 		"github.com/hashload/horse": {
 			"name": "horse",
 			"version": "v2.0.0",
-			"hash": "e37b9706c16357ab94219cf12b67b036",
+			"hash": "ce8620af9f63c4bd8153146c61bd8dce",
 			"artifacts": {},
 			"failed": false,
 			"changed": false
@@ -18,13 +18,21 @@
 			"failed": false,
 			"changed": false
 		},
+		"github.com/paolo-rossi/delphi-jose-jwt": {
+			"name": "delphi-jose-jwt",
+			"version": "v2.5.2",
+			"hash": "589e56e202f3acd41b4021314c54518c",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		},
 		"github.com/viniciussanchez/dataset-serialize": {
 			"name": "dataset-serialize",
 			"version": "v2.1.6",
-			"hash": "0c9bfe2d09c47c5d024995181983e2f2",
+			"hash": "91f5d3c7e1267cc8f43178ef642eee74",
 			"artifacts": {},
 			"failed": false,
-			"changed": true
+			"changed": false
 		},
 		"https://github.com/hashload/handle-exception": {
 			"name": "handle-exception",
@@ -50,6 +58,14 @@
 			"failed": false,
 			"changed": false
 		},
+		"https://github.com/hashload/horse-jwt": {
+			"name": "horse-jwt",
+			"version": "1.2.4",
+			"hash": "c176942edc75431e24a5d8c0bb79aa5e",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		},
 		"https://github.com/hashload/jhonson": {
 			"name": "jhonson",
 			"version": "1.0.5",
@@ -61,7 +77,7 @@
 		"https://github.com/hashload/ragna": {
 			"name": "ragna",
 			"version": "3.2.0",
-			"hash": "f59dc0248319a62cd05707210a17d1cf",
+			"hash": "46cb4bc71587e9814cb394e9122ac003",
 			"artifacts": {},
 			"failed": false,
 			"changed": false
@@ -69,10 +85,10 @@
 		"https://github.com/viniciussanchez/dataset-serialize": {
 			"name": "dataset-serialize",
 			"version": "v2.1.6",
-			"hash": "0c9bfe2d09c47c5d024995181983e2f2",
+			"hash": "91f5d3c7e1267cc8f43178ef642eee74",
 			"artifacts": {},
 			"failed": false,
-			"changed": false
+			"changed": true
 		}
 	}
 }

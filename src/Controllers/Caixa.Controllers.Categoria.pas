@@ -9,7 +9,7 @@ Uses
 
   Ragna,
 
-  Caixa.Services.Categoria;
+  Caixa.Services.Categoria, Caixa.Providers.Authorization;
 
 type
   TControllerCategoria = Class
@@ -28,22 +28,26 @@ implementation
 procedure Registry;
 begin
   THorse
-    .Get   ('/categoria/'              , TControllerCategoria.Get)
-    .Get   ('/categoria/:id_categoria/', TControllerCategoria.GetByID)
-    .Post  ('/categoria/'              , TControllerCategoria.Post)
-    .put   ('/categoria/:id_categoria/', TControllerCategoria.Put)
-    .Delete('/categoria/:id_categoria/', TControllerCategoria.Delete);
+//    .Group
+//    .Use(TProviderAuthorization.Authorization)
+      .Get   ('/categoria/'              , TProviderAuthorization.Authorization, TControllerCategoria.Get)
+      .Get   ('/categoria/:id_categoria/', TProviderAuthorization.Authorization, TControllerCategoria.GetByID)
+      .Post  ('/categoria/'              , TProviderAuthorization.Authorization, TControllerCategoria.Post)
+      .put   ('/categoria/:id_categoria/', TProviderAuthorization.Authorization, TControllerCategoria.Put)
+      .Delete('/categoria/:id_categoria/', TProviderAuthorization.Authorization, TControllerCategoria.Delete);
 end;
 
 { TControllerCategoria }
 class procedure TControllerCategoria.Get(aReq: THorseRequest; aRes: THorseResponse; aNext: TProc);
 Var
   lServiceCategoria:TServiceCategoria;
+  lLoggedUser:TLoggedUser;
 begin
   lServiceCategoria := TServiceCategoria.Create(nil);
   try
+    lLoggedUser := TProviderAuthorization.GetLoggedUser(aReq);
     aRes
-      .Send(lServiceCategoria.Get.ToJSONArray)
+      .Send(lServiceCategoria.Get(lLoggedUser.ID).ToJSONArray)
       .Status(THTTPStatus.OK);
   finally
     FreeAndNil(lServiceCategoria);
@@ -54,13 +58,15 @@ class procedure TControllerCategoria.GetByID(aReq: THorseRequest; aRes: THorseRe
 Var
   lServiceCategoria:TServiceCategoria;
   lID_Categoria:Integer;
+  lLoggedUser:TLoggedUser;
 begin
   lServiceCategoria := TServiceCategoria.Create(nil);
   try
     lID_Categoria := aReq.Params.Items['id_categoria'].ToInteger;
+    lLoggedUser   := TProviderAuthorization.GetLoggedUser(aReq);
 
     aRes
-      .Send(lServiceCategoria.GetByID(lID_Categoria).ToJSONObject)
+      .Send(lServiceCategoria.GetByID(lLoggedUser.ID, lID_Categoria).ToJSONObject)
       .Status(THTTPStatus.OK);
 
   finally
@@ -73,13 +79,15 @@ class procedure TControllerCategoria.Delete(aReq: THorseRequest; aRes: THorseRes
 Var
   lServiceCategoria:TServiceCategoria;
   lID_Categoria:Integer;
+  lLoggedUser:TLoggedUser;
 begin
   lServiceCategoria := TServiceCategoria.Create(nil);
   try
     lID_Categoria := aReq.Params.Items['id_categoria'].ToInteger;
+    lLoggedUser   := TProviderAuthorization.GetLoggedUser(aReq);
 
     aRes
-      .Send(lServiceCategoria.Delete(lID_Categoria).ToJsonArray)
+      .Send(lServiceCategoria.Delete(lLoggedUser.ID, lID_Categoria))
       .Status(THTTPStatus.OK)
   finally
     FreeAndNil(lServiceCategoria);
@@ -90,33 +98,34 @@ end;
 class procedure TControllerCategoria.Post(aReq: THorseRequest; aRes: THorseResponse; aNext: TProc);
 var
   lServiceCategoria:TServiceCategoria;
+  lLoggedUser:TLoggedUser;
 begin
   lServiceCategoria := TServiceCategoria.Create(nil);
   try
+    lLoggedUser := TProviderAuthorization.GetLoggedUser(aReq);
 
     aRes
-      .Send(lServiceCategoria.Post(aReq.Body<TJsonObject>).ToJsonObject)
+      .Send<TJsonObject>(lServiceCategoria.Post(lLoggedUser.ID, aReq.Body<TJsonObject>).ToJsonObject())
       .Status(THTTPStatus.Created);
 
   finally
-    FreeAndNil(lServiceCategoria);
+    lServiceCategoria.Free;
   end;
 end;
 
 class procedure TControllerCategoria.Put(aReq: THorseRequest; aRes: THorseResponse; aNext: TProc);
 var
   lServiceCategoria:TServiceCategoria;
-  lBody:TJsonObject;
   lID_Categoria:Integer;
+  lLoggedUser:TLoggedUser;
 begin
   lServiceCategoria := TServiceCategoria.Create(nil);
   try
     lID_Categoria := aReq.Params.Items['id_categoria'].ToInteger;
-    lBody := aReq.Body<TJsonObject>;
-    lBody.AddPair(lServiceCategoria.categoriaID.FieldName, TJsonNumber.Create(lID_Categoria));
+    lLoggedUser := TProviderAuthorization.GetLoggedUser(aReq);
 
     aRes
-      .Send(lServiceCategoria.Put(lBody).ToJsonObject)
+      .Send(lServiceCategoria.Put(lLoggedUser.ID, lID_Categoria, aReq.Body<TJsonObject>).ToJsonObject)
       .Status(THTTPStatus.OK);
   finally
     FreeAndNil(lServiceCategoria);
