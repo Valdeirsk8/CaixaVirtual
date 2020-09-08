@@ -40,7 +40,7 @@ begin
     function(const AUsername, APassword: string): Boolean
     begin
       LoggedUser := TProviderAuthorization.GetLoggedUser(AUsername, APassword);
-      Result     := True;
+      Result     := LoggedUser.ID <> 0;
     end);
 
   Horse.BasicAuthentication.Middleware(aReq, aRes, aNext);
