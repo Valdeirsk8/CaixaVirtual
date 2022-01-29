@@ -8,26 +8,26 @@ A Documentação completa da Api pode ser encontrada [neste link](https://docume
 
 **Pré-requisitos - Build**
 
-- Basta baixar e compilar a aplicação utiliando o Delphi Tokyo
-- Há uma pasta **Modules** no diretório Raiz do projeto, esta pasta e suas subPastas precisam estar no **search path** do projeto para ele compilar
+-   Basta baixar e compilar a aplicação utiliando o Delphi Tokyo
+-   Há uma pasta **Modules** no diretório Raiz do projeto, esta pasta e suas subPastas precisam estar no **search path** do projeto para ele compilar
 
 ##### Obs.: Verificar o search path do atual do projeto e apontar para o diretório onde esta o projeto.
 
 **Pré-requisitos - Execução**
 
-- Firebird 3.0 Instaldo e em execução
-- Junto ao .exe do servidor há um aquivo .ini nele é necessário configurar
-  - O Caminho do banco de dados
-  - o IP do servidor ondo esta o banco de dados
-  - A porta onde o Firebird esta rodando
-    ```
-    [BANCO]
-    DATABASE=C:\Users\Documents\CaixaVirtual\DataBase\DBCAIXAVIRTUAL.FDB
-    SERVER=127.0.0.1
-    PORT=3050
-    ```
-- A Aplicação é Console basta que ele estaja aberta para que respondas as requisiçãoes
-  - A Porta padrão da aplicação é 9000
+-   Firebird 3.0 Instaldo e em execução
+-   Junto ao .exe do servidor há um aquivo .ini nele é necessário configurar
+    -   O Caminho do banco de dados
+    -   o IP do servidor ondo esta o banco de dados
+    -   A porta onde o Firebird esta rodando
+        ```
+        [BANCO]
+        DATABASE=C:\Users\Documents\CaixaVirtual\DataBase\DBCAIXAVIRTUAL.FDB
+        SERVER=127.0.0.1
+        PORT=3050
+        ```
+-   A Aplicação é Console basta que ele estaja aberta para que respondas as requisiçãoes
+    -   A Porta padrão da aplicação é 9000
 
 ###### ps.: não foi criado recurso para alterar a porta da aplicação.
 
@@ -41,7 +41,7 @@ A Documentação completa da Api pode ser encontrada [neste link](https://docume
 
 **Recursos Diponíveis na API**
 
-- /login
+-   /login
 
 ```
     Get
@@ -55,7 +55,7 @@ A Documentação completa da Api pode ser encontrada [neste link](https://docume
 
 A Api irá retornar um token que deverá ser utilizado para em todos os outros recursos.
 
-- /usuario
+-   /usuario
 
 ```
     Get
@@ -78,7 +78,7 @@ A Api irá retornar um token que deverá ser utilizado para em todos os outros r
         /usuario/{id_usuario}
 ```
 
-- /categoria
+-   /categoria
 
 ```
     Get
@@ -101,7 +101,7 @@ A Api irá retornar um token que deverá ser utilizado para em todos os outros r
         /categoria/{id_categoria}
 ```
 
-- /movimentacoes
+-   /movimentacoes
 
 ```
     Get
@@ -122,4 +122,8 @@ A Api irá retornar um token que deverá ser utilizado para em todos os outros r
 ```
     delete
         /movimentacao/{id_movimentacao}
+```
+
+```
+    That's a change for teste
 ```
